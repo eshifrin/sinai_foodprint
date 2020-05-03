@@ -2,15 +2,15 @@ class EmissionCalculator {
   static LBS_PER_KG = 2.2;
   static WEEKS_PER_YEAR = 52;
 
-  constructor({ emissionsData, consumptionData, usData }) {
+  constructor({ emissionsData, consumptionData, annualEmissions }) {
     this.emissionData = emissionsData; // annual by category emission
-    this.usData = usData;
+    this.annualEmissions = annualEmissions;
     this.consumptionData = consumptionData;
   }
 
   getAverages = () => {
     return Promise.resolve({
-      usData: this.usData,
+      annualEmissions: this.annualEmissions,
       consumptionData: this.consumptionData,
     });
   };

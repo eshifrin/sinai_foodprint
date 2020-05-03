@@ -6,7 +6,7 @@ const router = Router();
 const emissionCalculator = new EmissionCalculator({
   emissionsData: Data.EMISSION_BY_CATEGORY,
   consumptionData: Data.WEEKLY_CONSUMPTION_DATA_POUNDS,
-  usData: Data.US_EMISSION_KG_PER_YEAR,
+  annualEmissions: Data.US_EMISSION_KG_PER_YEAR,
 });
 
 router.get("/averages", async (req, res) => {
