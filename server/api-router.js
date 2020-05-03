@@ -4,7 +4,7 @@ const Data = require("./data");
 
 const router = Router();
 const emissionCalculator = new EmissionCalculator({
-  emissionsData: Data.EMISSION_BY_CATEGORY,
+  emissionsData: Data.EMISSION_PER_POUND,
   consumptionData: Data.WEEKLY_CONSUMPTION_DATA_POUNDS,
   annualEmissions: Data.US_EMISSION_KG_PER_YEAR,
 });
@@ -35,7 +35,7 @@ const isCalculateRequestValid = (req) => {
 
   const { userConsumption } = req.body;
 
-  const expectedKeys = Object.keys(EMISSION_BY_CATEGORY);
+  const expectedKeys = Object.keys(Data.EMISSION_PER_POUND);
 
   for (const k of expectedKeys) {
     const v = userConsumption[k];

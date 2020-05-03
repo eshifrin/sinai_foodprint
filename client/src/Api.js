@@ -8,6 +8,14 @@ class Api {
     const { data } = await axios(Api.AVERAGES_ROUTE);
     return data.averages;
   };
+
+  static calculate = async (userConsumption) => {
+    const { data } = await axios.post(Api.CALCULATE_ROUTE, {
+      userConsumption,
+    });
+
+    return data.userEmissions;
+  };
 }
 
 export default Api;
