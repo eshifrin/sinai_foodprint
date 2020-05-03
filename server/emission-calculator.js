@@ -25,10 +25,9 @@ class EmissionCalculator {
           0
         );
         obj[category] = emission;
-        obj.TOTAL += emission;
         return obj;
       },
-      { TOTAL: 0 }
+      {}
     );
 
     return Promise.resolve(annualized);

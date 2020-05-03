@@ -4,6 +4,7 @@ import { Layout } from "antd";
 import Api from "./Api";
 import { Categories } from "../../shared/constants";
 import FoodCategory from "./components/FoodCategory";
+import EmissionsChart from "./components/EmissionsChart";
 
 const { Header, Content } = Layout;
 
@@ -18,7 +19,6 @@ function App() {
   const [annualAvgEmissions, setAnnualAvgEmissions] = useState({});
 
   useEffect(() => {
-    debugger;
     Api.getAverages().then((data) => {
       const { annualEmissions, consumptionData } = data;
 
@@ -75,7 +75,12 @@ function App() {
               />
             );
           })}
-          <pre>{JSON.stringify(annualUserEmissions)}</pre>
+
+          <EmissionsChart
+            order={CategoryOrder}
+            average={annualAvgEmissions}
+            user={annualUserEmissions}
+          />
         </Content>
       </Layout>
     </div>
