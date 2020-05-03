@@ -1,14 +1,14 @@
-const express = require('express');
-const bodyParser = require('body-parser');
+const express = require("express");
+const bodyParser = require("body-parser");
 
 const app = express();
 const port = process.env.PORT || 4000;
 
+const ApiRouter = require("./api-router");
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/api/test', (req, res) => {
-  res.send({ value: 'test' });
-});
+app.use("/api", ApiRouter);
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
