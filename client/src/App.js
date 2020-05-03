@@ -1,8 +1,20 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import axios from "axios";
+
+const getTest = async () => {
+  const { data } = await axios("/api/test");
+  return data;
+};
 
 function App() {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    getTest().then((data) => setData(data));
+  }, [data]);
+
   return (
     <div className="App">
       <header className="App-header">
@@ -10,14 +22,7 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <pre> {JSON.stringify(data)}</pre>
       </header>
     </div>
   );
