@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
-import { Divider, Layout } from "antd";
+import { Divider, Layout, Spin, message } from "antd";
 import Api from "./Api";
 import { Categories } from "../../shared/constants";
 import FoodCategory from "./components/FoodCategory";
 import EmissionsChart from "./components/EmissionsChart";
-
 import logo from "./SINAI_logo.webp";
 
 const { Header, Content } = Layout;
+
+function Spinner({ isSpinning }) {
+  return <Spin spinning={isSpinning} wrapperClassName="App-spinner" />;
+}
 
 function App() {
   /*
@@ -19,16 +22,26 @@ function App() {
   const [weeklyAvgConsumption, setWeeklyAvgConsumption] = useState({});
   const [annualUserEmissions, setAnnualUserEmissions] = useState({});
   const [annualAvgEmissions, setAnnualAvgEmissions] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    Api.getAverages().then((data) => {
-      const { annualEmissions, consumptionData } = data;
+    setIsLoading(true);
 
-      setWeeklyAvgConsumption(consumptionData);
-      setWeeklyUserConsumption(consumptionData);
-      setAnnualAvgEmissions(annualEmissions);
-      setAnnualUserEmissions(annualEmissions);
-    });
+    Api.getAverages()
+      .then((data) => {
+        const { annualEmissions, consumptionData } = data;
+
+        setWeeklyAvgConsumption(consumptionData);
+        setWeeklyUserConsumption(consumptionData);
+        setAnnualAvgEmissions(annualEmissions);
+        setAnnualUserEmissions(annualEmissions);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.log("Error on load", error);
+        setIsLoading(false);
+        message.error("Error fetching initial data", 2);
+      });
   }, []);
 
   const CategoryOrder = [
@@ -56,20 +69,27 @@ function App() {
 
     setWeeklyUserConsumption(newWeeklyUserConsumption);
 
-    Api.calculate(newWeeklyUserConsumption).then((newUserEmissions) => {
-      setAnnualUserEmissions(newUserEmissions);
-    });
+    setIsLoading(true);
+    Api.calculate(newWeeklyUserConsumption)
+      .then((newUserEmissions) => {
+        setAnnualUserEmissions(newUserEmissions);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.log("Error on calculate", error);
+        setIsLoading(false);
+        message.error("Error calculating emissions", 2);
+      });
   };
 
-  if (!Object.keys(annualUserEmissions).length) {
-    return null;
-  }
+  const isDataLoaded = !!Object.keys(annualAvgEmissions).length;
 
   return (
     <div className="App">
       <Layout>
+        <Spinner isSpinning={isLoading} />
         <Header style={{ backgroundColor: "rgb(240, 240, 215)" }}>
-          <img src={logo} />
+          <img src={logo} alt="Sinai logo" />
         </Header>
         <Content prefixCls={"content"}>
           <div className="apptitle">Food Footprint</div>
@@ -88,34 +108,38 @@ function App() {
               deserunt mollit anim id est laborum.
             </div>
             <Divider style={{ backgroundColor: "lightgrey" }} />
-            <div className="data-container">
-              <div className="categoryinputs">
-                <div className="description">
-                  For each category, please estimate the
-                  <span className="pounds"> pounds </span>
-                  you consume per <span className="week"> week.</span> The
-                  values are defaulted to averages in America. Click on the
-                  tooltips for additional guidance.
+            {!isDataLoaded ? null : (
+              <div className="data-container">
+                <div className="categoryinputs">
+                  <div className="description">
+                    For each category, please estimate the
+                    <span className="pounds"> pounds </span>
+                    you consume per <span className="week"> week.</span> The
+                    values are defaulted to averages in America. Click on the
+                    tooltips for additional guidance.
+                  </div>
+                  {CategoryOrder.map((category) => {
+                    return (
+                      <FoodCategory
+                        key={category}
+                        category={category}
+                        onConsumptionChange={changeUserConsumptionValue(
+                          category
+                        )}
+                        userValue={weeklyUserConsumption[category]}
+                        weeklyAverage={weeklyAvgConsumption[category]}
+                      />
+                    );
+                  })}
                 </div>
-                {CategoryOrder.map((category) => {
-                  return (
-                    <FoodCategory
-                      key={category}
-                      category={category}
-                      onConsumptionChange={changeUserConsumptionValue(category)}
-                      userValue={weeklyUserConsumption[category]}
-                      weeklyAverage={weeklyAvgConsumption[category]}
-                    />
-                  );
-                })}
-              </div>
 
-              <EmissionsChart
-                order={CategoryOrder}
-                average={annualAvgEmissions}
-                user={annualUserEmissions}
-              />
-            </div>
+                <EmissionsChart
+                  order={CategoryOrder}
+                  average={annualAvgEmissions}
+                  user={annualUserEmissions}
+                />
+              </div>
+            )}
           </div>
         </Content>
       </Layout>

@@ -1,5 +1,4 @@
 import React from "react";
-import { Categories } from "../../../shared/constants";
 import {
   BarChart,
   Bar,

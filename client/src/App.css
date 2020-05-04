@@ -2,6 +2,8 @@
 .App {
   text-align: center;
   color: #1a5031;
+  height: 100vh;
+  background-color: rgb(240, 240, 215);
 }
 
 .App-link {
@@ -19,7 +21,12 @@
   vertical-align: middle;
   letter-spacing: 2px;
   font-weight: 700;
-  background-color: rgb(240, 240, 215);
+}
+
+.ant-spin {
+  position: fixed;
+  right: 30px;
+  top: 30px;
 }
 
 .content {
