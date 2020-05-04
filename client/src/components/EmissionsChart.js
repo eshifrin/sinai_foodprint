@@ -50,12 +50,8 @@ function EmissionsChart({ order, user, average }) {
             <YAxis type="category" dataKey="category" />
             <Tooltip />
             <Legend />
-            <Bar dataKey="user" fill="#a6ad58">
-              <LabelList dataKey="user" position="right" />
-            </Bar>
-            <Bar dataKey="avg" fill="#82ca9d">
-              <LabelList dataKey="avg" position="right" />
-            </Bar>
+            <Bar dataKey="user" fill="#a6ad58"></Bar>
+            <Bar dataKey="avg" fill="#82ca9d"></Bar>
           </BarChart>
         </ResponsiveContainer>
       </div>

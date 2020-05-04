@@ -49,7 +49,6 @@ const isCalculateRequestValid = (req) => {
   }
 
   const { userConsumption } = req.body;
-
   const expectedKeys = Object.keys(Data.EMISSION_PER_POUND);
 
   for (const k of expectedKeys) {
