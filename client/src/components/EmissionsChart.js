@@ -18,7 +18,7 @@ function EmissionsChart({ order, user, average }) {
   const totalAverage = Object.values(average).reduce((a, b) => a + b);
 
   const data = order.map((category) => ({
-    category: category,
+    category: category.slice(0, 1) + category.slice(1).toLowerCase(),
     user: user[category],
     avg: average[category],
   }));
@@ -30,25 +30,23 @@ function EmissionsChart({ order, user, average }) {
   });
 
   return (
-    <BarChart
-      width={500}
-      height={300}
-      data={data}
-      margin={{
-        top: 5,
-        right: 30,
-        left: 20,
-        bottom: 5,
-      }}
-    >
-      <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="category" />
-      <YAxis />
-      <Tooltip />
-      <Legend />
-      <Bar dataKey="user" fill="#8884d8" background={{ fill: "#eee" }} />
-      <Bar dataKey="avg" fill="#82ca9d" />
-    </BarChart>
+    <div className="emissions-chart">
+      <div className="title">Annual Emissions (CO2kge) by Category</div>
+      <BarChart
+        layout={"vertical"}
+        width={500}
+        height={800}
+        data={data}
+        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+      >
+        <XAxis type="number" />
+        <YAxis type="category" dataKey="category" />
+        <Tooltip />
+        <Legend />
+        <Bar dataKey="user" fill="#a6ad58" />
+        <Bar dataKey="avg" fill="#82ca9d" />
+      </BarChart>
+    </div>
   );
 }
 

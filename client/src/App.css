@@ -1,39 +1,94 @@
 
 .App {
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  color: #1a5031;
 }
 
 .App-link {
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.week, .pounds {
+  font-weight: bold;
+}
+
+
+.apptitle {
+  font-size: 35px;
+  text-transform: uppercase;
+  height: 50px;
+  vertical-align: middle;
+  letter-spacing: 2px;
+  font-weight: 700;
+  background-color: rgb(240, 240, 215);
+}
+
+.content {
+  background-color: rgb(240, 240, 215);
+}
+
+.explanation {
+  text-transform: lowercase;
+  font-weight: 800;
+  background-color: rgb(240, 240, 215);
+}
+
+.main {
+  padding: 0px 100px;
+  margin-top: 25px;
+}
+
+.description {
+  text-align: start;
+}
+
+.data-container {
+  display: flex;
+}
+
+.categoryinputs {
+  width: 50%;
+}
+
+.food-category {
+  display: flex;
+  margin: 20px 0px;
+}
+
+.food-category .title-container {
+  display: flex;
+  width: 25%;
+  justify-content: flex-end;
+  padding-right: 8px;
+}
+
+.food-category .title {
+  font-size: 20px;
+  margin-right: 3px;
+  text-transform: capitalize;
+}
+
+.food-category .anticon {
+  padding-top: 3px;
+}
+
+.food-category .inputcontainer {
+  width: 25%;
+  justify-content: center;
+}
+
+.food-category .change {
+  width: 50%;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.emissions-chart .title {
+  margin: 5px 0 25px 15px;
+  font-size: 20px;
+  letter-spacing: 2px;
+  font-weight: bold;
 }
